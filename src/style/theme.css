@@ -1,0 +1,11 @@
+@theme{
+
+  /* 초록색 */
+  --color-primary: #34C759;
+
+  /* 빨간색 */
+  --color-secondary: #DD3A44;
+  --color-text: #1a1a1a;
+  --color-bg: #f6f6f6;
+
+}

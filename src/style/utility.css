@@ -1,0 +1,14 @@
+@layer utilities{
+
+  .flex-center{
+    @apply flex justify-center items-center;
+  }
+
+  .page-layout{
+    @apply flex-1 w-full mx-auto
+  }
+
+  .max-w-375{
+    @apply max-w-[375px]
+  }
+}
