@@ -5,7 +5,7 @@ function Root() {
   return (
     <>
       <Header />
-      <main className="page-layout max-w-375 pt-10">
+      <main className="page-layout max-w-375">
         <Outlet />
       </main>
     </>
