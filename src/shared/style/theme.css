@@ -4,8 +4,9 @@
   --color-primary: #34C759;
 
   /* 빨간색 */
-  --color-secondary: #DD3A44;
+  --color-secondary: #c8353f;
   --color-text: #1a1a1a;
   --color-bg: #f6f6f6;
+    --font-jalnan: 'YeogiOttaeJalnan', sans-serif;
 
 }
