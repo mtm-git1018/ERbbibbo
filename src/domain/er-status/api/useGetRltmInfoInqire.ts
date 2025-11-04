@@ -28,7 +28,9 @@ export interface EmergencyRoomInfo {
 }
 
 const fetchEmergencyRoomData = async (STAGE1: string, STAGE2: string): Promise<EmergencyRoomInfo[]> => {
-  const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
+    const apiKey = encodeURIComponent(
+      "b26488efed9653925c32b62a4b6dde584893ef168f6f81a8dd985ea75fc39686"
+    );
   const baseUrl =
     "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire";
 
