@@ -3,15 +3,17 @@ import type { EmergencyRoomInfo } from "../api/useGetRltmInfoInqire";
 
 import { BiPhone, BiSolidMapPin } from "react-icons/bi";
 import StatusItem from "./StatusItem";
+import { Link, useSearchParams } from "react-router";
 
 
 function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
-
-
+  const [searchParams] = useSearchParams();
 
   return (
-      <li className="flex flex-col gap-4">
-        {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
+    <li className="flex flex-col gap-4">
+      {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
+
+      <Link to={`/detail?${searchParams.toString()}`} state={{item}} className="flex flex-col gap-4">
         {/* 이름, 전화번호 */}
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-bold">{item.dutyName}</h3>
@@ -141,32 +143,33 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
             </span>
           </div>
         </div>
+      </Link>
 
-        {/* 지도 보기, 전화 걸기 */}
-        <div className="flex gap-2 items-center justify-end">
-          <a
-            href={`https://map.kakao.com/link/map/${
-              item.hpid
-            }&name=${encodeURIComponent(item.dutyName)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-1/2 h-11 bg-secondary text-white rounded-md flex items-center justify-center gap-2"
-          >
-            <BiSolidMapPin />
-            지도 보기
-          </a>
+      {/* 지도 보기, 전화 걸기 */}
+      <div className="flex gap-2 items-center justify-end">
+        <a
+          href={`https://map.kakao.com/link/map/${
+            item.hpid
+          }&name=${encodeURIComponent(item.dutyName)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-1/2 h-11 bg-secondary text-white rounded-md flex items-center justify-center gap-2"
+        >
+          <BiSolidMapPin />
+          지도 보기
+        </a>
 
-          <a
-            href={`tel:${item.dutyTel3}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-1/2 h-11 bg-primary text-white rounded-md flex items-center justify-center gap-2"
-          >
-            <BiPhone />
-            전화 걸기
-          </a>
-        </div>
-      </li>
+        <a
+          href={`tel:${item.dutyTel3}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-1/2 h-11 bg-primary text-white rounded-md flex items-center justify-center gap-2"
+        >
+          <BiPhone />
+          전화 걸기
+        </a>
+      </div>
+    </li>
   );
 }
 export default ERItem;

@@ -13,10 +13,10 @@ function Detail() {
 
   return (
     <div className="max-w-375">
-      <section className="mt-5">
+      <section className="py-5 border-b border-gray-300">
         <DetailStatusItem/>
       </section>
-      <section className="mt-5">
+      <section className="py-5">
         <h2 className="text-xl font-bold">응급실 메세지</h2>
         <ul className="flex flex-col gap-2 pt-3">
           {data &&

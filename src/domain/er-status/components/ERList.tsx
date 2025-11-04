@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router";
+import {useSearchParams } from "react-router";
 import { useGetRltmInfoInqire } from "../api/useGetRltmInfoInqire";
 import ERItem from "./ERItem";
 
@@ -17,9 +17,7 @@ function ERList() {
   return (
     <ul className="flex flex-col gap-8">
       {data.map((item, index) => (
-        <Link to={`/detail?${searchParams.toString()}`} state={{item,index}}>
           <ERItem key={index} item={item} first={index === 0} />
-        </Link>
       ))}
     </ul>
   );

@@ -5,7 +5,7 @@
   }
 
   .page-layout{
-    @apply flex-1 w-full px-4 mx-auto
+    @apply flex-1 w-full flex-col px-4 mx-auto
   }
 
   .max-w-375{
