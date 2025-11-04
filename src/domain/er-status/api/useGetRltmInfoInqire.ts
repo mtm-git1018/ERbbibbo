@@ -1,3 +1,4 @@
+import { queryKeys } from "@/shared/config/querykeys";
 import { useQuery } from "@tanstack/react-query";
 import { XMLParser } from "fast-xml-parser";
 
@@ -10,24 +11,49 @@ const parser = new XMLParser({
   parseTagValue: true,
 });
 
-// 응급실 정보 타입 정의
 export interface EmergencyRoomInfo {
-  dutyName: string; // 병원명
-  dutyTel3: string; // 응급실 전화번호
-  hpid: string; // 병원 ID
-  hvec: number; // 응급실 가용 병상 수
-  hvicc: number; // 중환자실 가용 병상 수
-  hvgc: number; // 일반 병상 수
-  hvoc: number; // 수술실 가용 수
-  hvncc: number; // 신생아 중환자실
-  hvidate: string; // 업데이트 시간
-  hvctayn: string; // CT 가용 여부 (Y/N)
-  hvmriayn: string; // MRI 가용 여부 (Y/N)
-  hvangioayn: string; // 혈관촬영기 가용 여부 (Y/N)
-  hvamyn: string; // 구급차 가용 여부 (Y/N)
+  dutyName: string;
+  dutyTel3: string;
+  hpid: string;
+
+  // 가용 병상 (음수 가능 - 대기환자 존재)
+  hvec: number; // 응급실 가용 병상
+  hvicc: number; // 중환자실 가용 병상
+  hvgc: number; // 일반 병상 가용
+  hvoc: number; // 수술실 가용
+  hvncc: number; // 신생아 중환자실 가용
+  hv2: number; // 소아응급실 가용
+  hv3: number; // 분만실 가용
+  hv30: number; // 격리실 가용
+
+  // 전체 병상 (hvs 필드들)
+  hvs01: number; // 전체 응급실 병상
+  hvs02: number; // 소아응급실 병상
+  hvs03: number; // 분만실 병상
+  hvs04: number; // 격리실 병상
+  hvs30: number; // 전체 일반 병상
+  hvs31: number; // 전체 중환자실 병상
+  hvs32: number; // 전체 수술실 병상
+  hvs33: number; // 전체 신생아 중환자실 병상
+
+  // 기타 필요한 필드들
+  hvidate: number;
+  hvctayn: string;
+  hvmriayn: string;
+  hvangioayn: string;
+  hvamyn: string;
+
+  // 계산된 필드들
+  emergencyUsage?: string;
+  emergencyStatus?: "available" | "busy" | "full" | "overflow";
+  icuUsage?: string;
+  generalUsage?: string;
 }
 
-const fetchEmergencyRoomData = async (STAGE1: string, STAGE2: string): Promise<EmergencyRoomInfo[]> => {
+const fetchEmergencyRoomData = async (
+  STAGE1: string,
+  STAGE2: string
+): Promise<EmergencyRoomInfo[]> => {
   const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
   const baseUrl =
     "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire";
@@ -55,11 +81,12 @@ const fetchEmergencyRoomData = async (STAGE1: string, STAGE2: string): Promise<E
   return Array.isArray(items) ? items : [items];
 };
 
-export const useGetRltmInfoInqire = () => {
+export const useGetRltmInfoInqire = (STAGE1: string, STAGE2: string) => {
   return useQuery({
-    queryKey: ["rltmInfoInqire"],
-    queryFn: () => fetchEmergencyRoomData("서울특별시", "강남구"),
+    queryKey: queryKeys.rltmInfoInqire(STAGE1, STAGE2),
+    queryFn: () => fetchEmergencyRoomData(STAGE1, STAGE2),
     staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
     refetchInterval: 10 * 60 * 1000, // 10분마다 자동 갱신
+    enabled: !!STAGE1,
   });
 };
