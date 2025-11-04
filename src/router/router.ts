@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
         Component: Main,
       },
       {
-        path: '/detail',
+        path: '/:id',
         Component:Detail,
       }
     ],
