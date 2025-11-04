@@ -1,4 +1,4 @@
-import Logo from "../assets/icons/구급차.svg";
+import Logo from "@/shared/assets/icons/logo.svg";
 
 function Header() {
   return (
