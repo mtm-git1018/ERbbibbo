@@ -17,6 +17,6 @@ const viteConfig =  defineConfig({
       '@':fileURLToPath(new URL('./src', import.meta.url))
     }
   }
-})
+}) 
 
 export default viteConfig;
