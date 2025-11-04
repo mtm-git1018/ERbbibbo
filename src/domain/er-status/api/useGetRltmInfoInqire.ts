@@ -27,7 +27,7 @@ export interface EmergencyRoomInfo {
   hvamyn: string; // 구급차 가용 여부 (Y/N)
 }
 
-const fetchEmergencyRoomData = async (): Promise<EmergencyRoomInfo[]> => {
+const fetchEmergencyRoomData = async (STAGE1: string, STAGE2: string): Promise<EmergencyRoomInfo[]> => {
   const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
   const baseUrl =
     "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire";
@@ -36,7 +36,8 @@ const fetchEmergencyRoomData = async (): Promise<EmergencyRoomInfo[]> => {
     serviceKey: apiKey,
     pageNo: "1",
     numOfRows: "100",
-    STAGE1: "서울특별시",
+    STAGE1: STAGE1 || "서울특별시",
+    STAGE2: STAGE2,
   });
 
   const response = await fetch(`${baseUrl}?${params.toString()}`);
@@ -48,7 +49,6 @@ const fetchEmergencyRoomData = async (): Promise<EmergencyRoomInfo[]> => {
   const xmlText = await response.text();
   const jsonData = parser.parse(xmlText);
 
-  // XML 구조에 따른 데이터 추출
   const items = jsonData?.response?.body?.items?.item || [];
 
   // 배열이 아닌 경우 배열로 변환
@@ -58,7 +58,7 @@ const fetchEmergencyRoomData = async (): Promise<EmergencyRoomInfo[]> => {
 export const useGetRltmInfoInqire = () => {
   return useQuery({
     queryKey: ["rltmInfoInqire"],
-    queryFn: fetchEmergencyRoomData,
+    queryFn: () => fetchEmergencyRoomData("서울특별시", "강남구"),
     staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
     refetchInterval: 10 * 60 * 1000, // 10분마다 자동 갱신
   });
