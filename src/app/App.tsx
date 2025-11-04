@@ -1,8 +1,13 @@
-import Header from "../shared/components/layout/Header"
+import { RouterProvider } from "react-router";
+import { router } from "../router/router";
+import TanstackProvider from "../shared/providers/TanstackProvider";
+
 function App() {
   return (
-    <Header></Header>
-  )
+    <TanstackProvider>
+      <RouterProvider router={router} />
+    </TanstackProvider>
+  );
 }
 
-export default App
+export default App;
