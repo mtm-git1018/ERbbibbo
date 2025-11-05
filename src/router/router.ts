@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import Main from "../pages/Main";
 import Root from "../pages/Root";
+import Detail from "@/pages/Detail";
+import Call from "@/pages/Call";
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +13,13 @@ export const router = createBrowserRouter([
         path: "/",
         Component: Main,
       },
+      {
+        path: '/:id',
+        Component:Detail,
+      }, {
+        path: '/call/:id',
+        Component:Call,
+      }
     ],
   },
 ]);
