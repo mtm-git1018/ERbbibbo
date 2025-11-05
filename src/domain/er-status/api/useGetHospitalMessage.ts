@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { XMLParser } from "fast-xml-parser";
 
 // XML 파서 설정
@@ -27,9 +27,9 @@ export interface HospitolMessage {
 }
 
 const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string):Promise<HospitolMessage[]>  => {
-  const apiKey = encodeURIComponent(
+  const apiKey = 
     "b26488efed9653925c32b62a4b6dde584893ef168f6f81a8dd985ea75fc39686"
-  );
+ 
   const baseUrl =
     "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmSrsillDissMsgInqire";
   
@@ -63,7 +63,8 @@ export const useGetHospitalMessage = (hpid:string,qn:string,stage1:string,stage2
         stage1,
         stage2
       ),
-    staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
+    placeholderData:keepPreviousData,
+    staleTime: 0, // 5분간 캐시 유지
     refetchInterval: 10 * 60 * 1000, // 10분마다 자동 갱신
   });
 };
