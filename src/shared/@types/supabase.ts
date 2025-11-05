@@ -1,4 +1,3 @@
-
 export type Json =
   | string
   | number
@@ -56,6 +55,42 @@ export type Database = {
             referencedColumns: ["author_id"]
           },
         ]
+      }
+      er_accepted: {
+        Row: {
+          accept: boolean
+          created_at: string
+          id: number
+        }
+        Insert: {
+          accept?: boolean
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          accept?: boolean
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      er_denied: {
+        Row: {
+          accept: boolean
+          created_at: string
+          id: number
+        }
+        Insert: {
+          accept?: boolean
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          accept?: boolean
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
       }
       feed_replies: {
         Row: {
