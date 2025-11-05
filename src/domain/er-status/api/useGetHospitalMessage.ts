@@ -11,27 +11,30 @@ const parser = new XMLParser({
 });
 
 export interface HospitolMessage {
-  dutyAddr: string, // 기관 주소
-  dutyName: string, // 기관명
-  emcOrgCod: string, // 기관코드
-  hpid: string, // 기관코드
-  rnum: number, // 일련번호
-  symBlkEndDtm: number, // 차단해제
-  symBlkMsg: string,//전달 메시지
-  symBlkMsgTyp: string, //메시지 구분
-  symBlkSttDtm: number// 차단 시작
-  symOutDspMth: string, // 표출차단구분
-  symOutDspYon: string, // 중증질환 차단 구분 
-  symTypCod: string // 중증질환코드
-  symTypCodMag: string;//중증질환명
+  dutyAddr: string; // 기관 주소
+  dutyName: string; // 기관명
+  emcOrgCod: string; // 기관코드
+  hpid: string; // 기관코드
+  rnum: number; // 일련번호
+  symBlkEndDtm: number; // 차단해제
+  symBlkMsg: string; //전달 메시지
+  symBlkMsgTyp: string; //메시지 구분
+  symBlkSttDtm: number; // 차단 시작
+  symOutDspMth: string; // 표출차단구분
+  symOutDspYon: string; // 중증질환 차단 구분
+  symTypCod: string; // 중증질환코드
+  symTypCodMag: string; //중증질환명
+  wgs84Lat: string;
+  wgs84Lon: string;
 }
 
 const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string):Promise<HospitolMessage[]>  => {
-  const apiKey = 
-    "b26488efed9653925c32b62a4b6dde584893ef168f6f81a8dd985ea75fc39686"
+  const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
+
  
   const baseUrl =
-    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmSrsillDissMsgInqire";
+    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire";
+
   
     const params = new URLSearchParams({
       serviceKey: apiKey,
