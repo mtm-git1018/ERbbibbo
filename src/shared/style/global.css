@@ -37,4 +37,5 @@
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
+    background-color: var(--color-bg);
 }
