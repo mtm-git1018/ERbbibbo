@@ -159,15 +159,19 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
           지도 보기
         </a>
 
-        <a
-          href={`tel:${item.dutyTel3}`}
+        <Link
+          to={`/call/${item.hpid}?name=${encodeURIComponent(item.dutyName)}&tel=${encodeURIComponent(item.dutyTel3)}`}
+          state={{
+            name: item.dutyName,
+            tel:item.dutyTel3
+          }}
           target="_blank"
           rel="noopener noreferrer"
           className="w-1/2 h-11 bg-primary text-white rounded-md flex items-center justify-center gap-2"
         >
           <BiPhone />
           전화 걸기
-        </a>
+        </Link>
       </div>
     </li>
   );

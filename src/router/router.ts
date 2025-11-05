@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
         path: '/:id',
         Component:Detail,
       }, {
-        path: '/call',
+        path: '/call/:id',
         Component:Call,
       }
     ],

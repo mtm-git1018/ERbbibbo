@@ -53,15 +53,15 @@ const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string
   return Array.isArray(items) ? items : [items];
 }
 
-export const useGetHospitalMessage = () => {
+export const useGetHospitalMessage = (hpid:string,qn:string,stage1:string,stage2:string) => {
   return useQuery({
     queryKey: ["hospitalMessage"],
     queryFn: () =>
       fetchMessagefromHospital(
-        "A1100015",
-        "연세대학교의과대학강남세브란스병원",
-        "서울특별시",
-        "강남구"
+        hpid,
+        qn,
+        stage1,
+        stage2
       ),
     staleTime: 5 * 60 * 1000, // 5분간 캐시 유지
     refetchInterval: 10 * 60 * 1000, // 10분마다 자동 갱신

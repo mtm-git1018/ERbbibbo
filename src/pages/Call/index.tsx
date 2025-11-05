@@ -1,12 +1,26 @@
 
+import { useEffect } from "react";
 import { MdPhone } from "react-icons/md";
+import { useSearchParams} from "react-router";
+
 
 function Call() {
+  const [searchParams] = useSearchParams()
+
+  const name = searchParams.get('name')
+  const tel = searchParams.get('tel')
+
+  useEffect(() => {
+    if (tel) {
+      window.location.href = `tel:${tel}`
+    }
+  }, [tel])
+  
   return (
     <div className="flex flex-col justify-between items-center min-h-full py-5">
-      <h1 className="text-2xl font-bold">병원명</h1>
+      <h1 className="text-2xl font-bold">{name}</h1>
       <section className="flex flex-col items-center gap-6">
-        <p className="text-3xl font-bold">010-4000-0000</p>
+        <p className="text-3xl font-bold">{tel}</p>
         <div className="text-primary">
           <MdPhone size={133} />
         </div>
