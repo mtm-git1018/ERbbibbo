@@ -4,8 +4,9 @@ import { BiPhone, BiSolidMapPin } from "react-icons/bi";
 import StatusItem from "./StatusItem";
 import { Link, useSearchParams } from "react-router";
 
-
 function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
+  const [searchParams] = useSearchParams();
+  
   const handleMapClick = (hospitalName: string) => {
     const encodedName = encodeURIComponent(hospitalName);
 
@@ -34,71 +35,77 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
     <li className="flex flex-col gap-4">
       {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
 
-      <Link to={`/detail?${searchParams.toString()}`} state={{item}} className="flex flex-col gap-4">
+      <Link
+        to={`/detail?${searchParams.toString()}`}
+        state={{ item }}
+        className="flex flex-col gap-4"
+      >
         {/* 이름, 전화번호 */}
         <div className="flex flex-col gap-1">
           <h3 className="text-2xl font-bold">{item.dutyName}</h3>
           <p className="text-sm text-gray-500">{item.dutyTel3}</p>
         </div>
 
-      {/* 병상 현황 */}
-      <div className="grid grid-cols-3 gap-2">
-        {item.hvec !== undefined && (
-          <StatusItem
-            cur={Math.max(0, item.hvs01 - item.hvec)}
-            max={item.hvs01}
-            name="응급실"
-          />
-        )}
+        {/* 병상 현황 */}
+        <div className="grid grid-cols-3 gap-2">
+          {item.hvec !== undefined && (
+            <StatusItem
+              cur={Math.max(0, item.hvs01 - item.hvec)}
+              max={item.hvs01}
+              name="응급실"
+            />
+          )}
 
-        {item.hvicc !== undefined && item.hvs31 > 0 && (
-          <StatusItem
-            cur={Math.max(0, (item.hvs31 || 0) - item.hvicc)}
-            max={item.hvs31 || 0}
-            name="중환자실"
-          />
-        )}
+          {item.hvicc !== undefined && item.hvs31 > 0 && (
+            <StatusItem
+              cur={Math.max(0, (item.hvs31 || 0) - item.hvicc)}
+              max={item.hvs31 || 0}
+              name="중환자실"
+            />
+          )}
 
-        {item.hvoc !== undefined && item.hvoc > 0 && (
-          <StatusItem
-            cur={Math.max(0, (item.hvs31 || item.hvs01) - item.hvoc)}
-            max={item.hvs32 || item.hvs01}
-            name="수술실"
-          />
-        )}
-        
-        {item.hvncc !== undefined && item.hvncc > 0 && (
-          <StatusItem
-            cur={Math.max(0, (item.hvs33 || 0) - item.hvncc)}
-            max={item.hvs33 || 0}
-            name="신생아중환자실"
-          />
-        )}
+          {item.hvoc !== undefined && item.hvoc > 0 && (
+            <StatusItem
+              cur={Math.max(0, (item.hvs31 || item.hvs01) - item.hvoc)}
+              max={item.hvs32 || item.hvs01}
+              name="수술실"
+            />
+          )}
 
-        {item.hvs02 !== undefined && item.hvs02 > 0 && (
-          <StatusItem
-            cur={Math.max(0, item.hvs02 - (item.hv2 || 0))}
-            max={item.hvs02}
-            name="소아응급실"
-          />
-        )}
+          {item.hvncc !== undefined && item.hvncc > 0 && (
+            <StatusItem
+              cur={Math.max(0, (item.hvs33 || 0) - item.hvncc)}
+              max={item.hvs33 || 0}
+              name="신생아중환자실"
+            />
+          )}
 
-        {item.hvs03 !== undefined && item.hv3 !== undefined && item.hv3 > 0 && (
-          <StatusItem
-            cur={Math.max(0, item.hvs03 - item.hv3)}
-            max={item.hvs03}
-            name="분만실"
-          />
-        )}
+          {item.hvs02 !== undefined && item.hvs02 > 0 && (
+            <StatusItem
+              cur={Math.max(0, item.hvs02 - (item.hv2 || 0))}
+              max={item.hvs02}
+              name="소아응급실"
+            />
+          )}
 
-        {item.hvs04 !== undefined && item.hvs04 > 0 && (
-          <StatusItem
-            cur={Math.max(0, item.hvs04 - (item.hv30 || 0))}
-            max={item.hvs04}
-            name="격리실"
-          />
-        )}
-      </div>
+          {item.hvs03 !== undefined &&
+            item.hv3 !== undefined &&
+            item.hv3 > 0 && (
+              <StatusItem
+                cur={Math.max(0, item.hvs03 - item.hv3)}
+                max={item.hvs03}
+                name="분만실"
+              />
+            )}
+
+          {item.hvs04 !== undefined && item.hvs04 > 0 && (
+            <StatusItem
+              cur={Math.max(0, item.hvs04 - (item.hv30 || 0))}
+              max={item.hvs04}
+              name="격리실"
+            />
+          )}
+        </div>
 
         {/* 도구 사용 가능 여부  */}
         <div className="flex gap-2 items-center justify-end">
@@ -180,10 +187,12 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
         </a>
 
         <Link
-          to={`/call/${item.hpid}?name=${encodeURIComponent(item.dutyName)}&tel=${encodeURIComponent(item.dutyTel3)}`}
+          to={`/call/${item.hpid}?name=${encodeURIComponent(
+            item.dutyName
+          )}&tel=${encodeURIComponent(item.dutyTel3)}`}
           state={{
             name: item.dutyName,
-            tel:item.dutyTel3
+            tel: item.dutyTel3,
           }}
           target="_blank"
           rel="noopener noreferrer"

@@ -32,7 +32,9 @@ function SearchSection() {
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?apikey=${apiKey}&x=${longitude}&y=${latitude}`,
           {
             headers: {
-              Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+              Authorization: `KakaoAK ${
+                import.meta.env.VITE_KAKAO_REST_API_KEY
+              }`,
             },
           }
         );
@@ -41,8 +43,11 @@ function SearchSection() {
 
         if (data.documents && data.documents.length > 0) {
           const address = data.documents[0].address;
-          setStage1(address.region_1depth_name); // 서울특별시
-          setStage2(address.region_2depth_name); // 강남구
+          const stage1 = address.region_1depth_name;
+          const stage2 = address.region_2depth_name;
+          setStage1(stage1); // 서울특별시
+          setStage2(stage2); // 강남구
+          navigate(`/?stage1=${stage1}&stage2=${stage2}`);
         }
       } catch (error) {
         console.error("주소 변환 실패:", error);
