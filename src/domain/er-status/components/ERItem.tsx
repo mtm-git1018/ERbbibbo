@@ -1,9 +1,33 @@
 import tw from "@/shared/utils/tw";
 import type { EmergencyRoomInfo } from "../api/useGetRltmInfoInqire";
-import StatusItem from "./statusItem";
 import { BiPhone, BiSolidMapPin } from "react-icons/bi";
+import StatusItem from "./StatusItem";
 
 function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
+  const handleMapClick = (hospitalName: string) => {
+    const encodedName = encodeURIComponent(hospitalName);
+
+    // 모바일에서 카카오맵 앱 실행 시도
+    if (
+      /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      window.location.href = `kakaomap://search?q=${encodedName}`;
+
+      // 앱이 없으면 3초 후 웹으로 이동
+      setTimeout(() => {
+        window.open(
+          `https://map.kakao.com/link/search/${encodedName}`,
+          "_blank"
+        );
+      }, 3000);
+    } else {
+      // 데스크톱에서는 웹으로 바로 이동
+      window.open(`https://map.kakao.com/link/search/${encodedName}`, "_blank");
+    }
+  };
+
   return (
     <li className="flex flex-col gap-4">
       {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
@@ -22,21 +46,24 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
             name="응급실"
           />
         )}
-        {item.hvicc !== undefined && (
+
+        {item.hvicc !== undefined && item.hvs31 > 0 && (
           <StatusItem
             cur={Math.max(0, (item.hvs31 || 0) - item.hvicc)}
             max={item.hvs31 || 0}
             name="중환자실"
           />
         )}
-        {item.hvoc !== undefined && (
+
+        {item.hvoc !== undefined && item.hvoc > 0 && (
           <StatusItem
             cur={Math.max(0, (item.hvs31 || item.hvs01) - item.hvoc)}
             max={item.hvs32 || item.hvs01}
             name="수술실"
           />
         )}
-        {item.hvncc !== undefined && (
+        
+        {item.hvncc !== undefined && item.hvncc > 0 && (
           <StatusItem
             cur={Math.max(0, (item.hvs33 || 0) - item.hvncc)}
             max={item.hvs33 || 0}
@@ -44,7 +71,7 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
           />
         )}
 
-        {item.hvs02 && (
+        {item.hvs02 !== undefined && item.hvs02 > 0 && (
           <StatusItem
             cur={Math.max(0, item.hvs02 - (item.hv2 || 0))}
             max={item.hvs02}
@@ -52,7 +79,7 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
           />
         )}
 
-        {item.hvs03 && item.hv3 && (
+        {item.hvs03 !== undefined && item.hv3 !== undefined && item.hv3 > 0 && (
           <StatusItem
             cur={Math.max(0, item.hvs03 - item.hv3)}
             max={item.hvs03}
@@ -60,9 +87,9 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
           />
         )}
 
-        {item.hvs04 && (
+        {item.hvs04 !== undefined && item.hvs04 > 0 && (
           <StatusItem
-            cur={Math.max(0, item.hvs04 - (item.hv30 || 0))} // hv30이 격리실 가용일 수 있음
+            cur={Math.max(0, item.hvs04 - (item.hv30 || 0))}
             max={item.hvs04}
             name="격리실"
           />
@@ -140,10 +167,8 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
       {/* 지도 보기, 전화 걸기 */}
       <div className="flex gap-2 items-center justify-end">
         <a
-          href={`https://map.kakao.com/link/map/${item.hpid}&name=${encodeURIComponent(item.dutyName)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-1/2 h-11 bg-secondary text-white rounded-md flex items-center justify-center gap-2"
+          className="w-1/2 h-11 bg-secondary text-white rounded-md flex items-center justify-center gap-2 cursor-pointer"
+          onClick={() => handleMapClick(item.dutyName)}
         >
           <BiSolidMapPin />
           지도 보기
