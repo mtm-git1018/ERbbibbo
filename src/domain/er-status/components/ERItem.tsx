@@ -3,10 +3,27 @@ import type { EmergencyRoomInfo } from "../api/useGetRltmInfoInqire";
 import { BiPhone, BiSolidMapPin } from "react-icons/bi";
 import StatusItem from "./StatusItem";
 import { Link, useSearchParams } from "react-router";
+import { formatDistance } from "@/shared/utils/distance";
 
-function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
+interface HospitalLocation {
+  created_at?: string;
+  dutyAddr?: string | null;
+  dutyDiv?: string | null;
+  endTime?: string | null;
+  startTime?: string | null;
+  latitude: number;
+  longitude: number;
+  distance: number;
+}
+
+interface ERItemProps {
+  item: EmergencyRoomInfo & HospitalLocation;
+  first?: boolean;
+}
+
+function ERItem({ item, first }: ERItemProps) {
   const [searchParams] = useSearchParams();
-  
+
   const handleMapClick = (hospitalName: string) => {
     const encodedName = encodeURIComponent(hospitalName);
 
@@ -34,6 +51,11 @@ function ERItem({ item, first }: { item: EmergencyRoomInfo; first?: boolean }) {
   return (
     <li className="flex flex-col gap-4">
       {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
+      {item.distance && (
+        <p className="text-sm text-gray-500">
+          {formatDistance(item.distance)}
+        </p>
+      )}
 
       <Link
         to={`/detail?${searchParams.toString()}`}

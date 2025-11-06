@@ -1,3 +1,4 @@
+import type { Tables } from "@/shared/@types/supabase";
 import { queryKeys } from "@/shared/config/querykeys";
 import supabase from "@/shared/config/supabase";
 import { useQuery } from "@tanstack/react-query";
@@ -44,10 +45,10 @@ export const useGetHospitalLocationByHpid = (hpid: string) => {
 
 // 다중 hpid용 훅 (새로 추가)
 export const useGetHospitalLocationsByHpids = (hpids: string[]) => {
-  return useQuery({
+  return useQuery<Tables<"hospital_locations">[]>({
     queryKey: ["hospitalLocations", ...hpids.sort()], // 정렬해서 캐시 키 일관성 유지
     queryFn: () => getHospitalLocationsByHpids(hpids),
     enabled: hpids.length > 0,
-    staleTime: 1000 * 60 * 5, // 5분간 fresh 상태 유지 (위치 정보는 자주 변하지 않음)
+    staleTime: 1000 * 60 * 5,
   });
 };
