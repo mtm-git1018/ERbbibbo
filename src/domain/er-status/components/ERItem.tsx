@@ -50,13 +50,6 @@ function ERItem({ item, first }: ERItemProps) {
 
   return (
     <li className="flex flex-col gap-4">
-      {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
-      {item.distance && (
-        <p className="text-sm text-gray-500">
-          {formatDistance(item.distance)}
-        </p>
-      )}
-
       <Link
         to={`/detail?${searchParams.toString()}`}
         state={{ item }}
@@ -64,6 +57,12 @@ function ERItem({ item, first }: ERItemProps) {
       >
         {/* 이름, 전화번호 */}
         <div className="flex flex-col gap-1">
+          {first && <p className="text-sm text-[#F85F3B]">가장 가까운</p>}
+          {item.distance && (
+            <p className="text-primary font-semibold">
+              {formatDistance(item.distance)}
+            </p>
+          )}
           <h3 className="text-2xl font-bold">{item.dutyName}</h3>
           <p className="text-sm text-gray-500">{item.dutyTel3}</p>
         </div>
