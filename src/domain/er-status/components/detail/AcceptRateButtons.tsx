@@ -3,10 +3,12 @@ import supabase from "@/shared/@types/createSupabase";
 function AcceptRateButtons() {
 
   const handleAccept = async() => {
-    const { error } = await supabase.from('er_accepted').insert({
-      created_at:new Date().toISOString(),
-      accept:true,
-    })
+    const { error } = await supabase.from("er_accepted").insert({
+      created_at: new Date().toLocaleString("sv-SE", {
+        timeZone: "Asia/Seoul",
+      }),
+      accept: true,
+    });
     if (error) {
       console.error(error) 
       return
@@ -18,7 +20,7 @@ function AcceptRateButtons() {
 
   const handleDenied = async () => {
     const { error } = await supabase.from('er_denied').insert({
-      created_at:new Date().toISOString(),
+      created_at:new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Seoul' }),
       accept:false
     })
     if (error) {
