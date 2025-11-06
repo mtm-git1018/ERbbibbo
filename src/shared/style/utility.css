@@ -2,13 +2,13 @@
 
   .flex-center{
     @apply flex justify-center items-center;
-  }
+  };
 
   .page-layout{
-    @apply flex-1 w-full flex-col px-4 mx-auto
-  }
+    @apply flex flex-1 flex-col px-4 w-full mx-auto
+  };
 
-  .max-w-375{
-    @apply max-w-[375px]
+  .responsive-container {
+    @apply max-w-[375px] md:max-w-[768px] lg:max-w-[1024px];
   }
 }
