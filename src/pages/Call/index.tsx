@@ -1,4 +1,5 @@
 
+import AcceptRateButtons from "@/domain/er-status/components/detail/AcceptRateButtons";
 import { useEffect } from "react";
 import { MdPhone } from "react-icons/md";
 import { useSearchParams} from "react-router";
@@ -27,23 +28,7 @@ function Call() {
         <p className="text-center">병원 응급실로 연결합니다.</p>
       </section>
       <section className="flex flex-col items-center gap-4">
-        <div className="flex gap-4">
-          <button
-            type="submit"
-            className="w-40 h-11 bg-primary rounded-xl text-white font-bold"
-          >
-            환자 수용됨
-          </button>
-          <button
-            type="submit"
-            className="w-40 h-11 bg-secondary rounded-xl text-white font-bold"
-          >
-            거절됨
-          </button>
-        </div>
-        <p className="text-gray-500 text-xs">
-          응급삐뽀는 특정 병원의 거절율을 수집하지 않습니다.
-        </p>
+        <AcceptRateButtons />
       </section>
     </div>
   );

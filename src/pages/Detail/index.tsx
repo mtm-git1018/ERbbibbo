@@ -17,7 +17,6 @@ function Detail() {
 
    if (isLoading || isFetching) return <div>로딩중...</div>;
    if (error) return <div>에러 발생: {error.message}</div>;
-
   const lat = data?.map((v) => v.wgs84Lat).join('')
   const long = data?.map((v) => v.wgs84Lon).join('')
 
@@ -30,7 +29,7 @@ function Detail() {
         <h2 className="text-xl font-bold">응급실 메세지</h2>
         <ul className="flex flex-col gap-2 pt-3">
           {data && data.length > 0 ? (
-            data.map((item: HospitolMessage) => {
+            data.map((item: HospitolMessage,i) => {
               return item.symTypCod == "Y000" ? (
                 <li
                   key={item.rnum}
@@ -39,7 +38,7 @@ function Detail() {
                   {item.symBlkMsg}
                 </li>
               ) : (
-                <li>응급실 메시지가 없습니다.</li>
+                  <li key={i}>응급실 메시지가 없습니다.</li>
               );
             })
           ) : (
