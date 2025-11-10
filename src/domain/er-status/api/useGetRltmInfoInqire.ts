@@ -57,7 +57,7 @@ const fetchEmergencyRoomData = async (
   const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
 
   const baseUrl =
-    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmRltmUsefulSckbdInfoInqire";
+  `${import.meta.env.VITE_API_URL}getEmrrmRltmUsefulSckbdInfoInqire`;
 
   const params = new URLSearchParams({
     serviceKey: apiKey,

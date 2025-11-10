@@ -30,9 +30,7 @@ const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string
   const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
 
  
-  const baseUrl =
-    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmSrsillDissMsgInqire";
-
+  const baseUrl = `${import.meta.env.VITE_API_URL}getEmrrmSrsillDissMsgInqire`;
   
     const params = new URLSearchParams({
       serviceKey: apiKey,
