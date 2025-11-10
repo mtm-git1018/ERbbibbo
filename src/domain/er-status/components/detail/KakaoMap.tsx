@@ -27,8 +27,7 @@ function KakaoMap({ lat, lon }: Props) {
       marker: marker,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const map = new kakao.maps.StaticMap(container, options);
+    new kakao.maps.StaticMap(container, options);
   }, []);
 
   return <div id="map" style={{ width: "400px", height: "400px" }}></div>;

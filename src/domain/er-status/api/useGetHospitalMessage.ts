@@ -24,8 +24,6 @@ export interface HospitolMessage {
   symOutDspYon: string; // 중증질환 차단 구분
   symTypCod: string; // 중증질환코드
   symTypCodMag: string; //중증질환명
-  wgs84Lat: string;
-  wgs84Lon: string;
 }
 
 const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string):Promise<HospitolMessage[]>  => {
@@ -33,7 +31,7 @@ const fetchMessagefromHospital = async(hpid:string,qn:string,q0:string,q1:string
 
  
   const baseUrl =
-    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire";
+    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEmrrmSrsillDissMsgInqire";
 
   
     const params = new URLSearchParams({

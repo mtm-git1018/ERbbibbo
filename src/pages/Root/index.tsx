@@ -5,7 +5,7 @@ function Root() {
   return (
     <div className="flex flex-col h-dvh">
       <Header />
-      <main className="page-layout max-w-375">
+      <main className="page-layout responsive-container">
         <Outlet />
       </main>
     </div>
