@@ -16,8 +16,7 @@ interface HospitalLocation {
 
 const fetchHospitalLocation = async (hpid:string):Promise<HospitalLocation[]> => {
   const apiKey = import.meta.env.VITE_PUBLIC_DATA_API_KEY;
-  const baseUrl =
-    "http://apis.data.go.kr/B552657/ErmctInfoInqireService/getEgytBassInfoInqire";
+  const baseUrl = `${import.meta.env.VITE_API_URL}getEgytBassInfoInqire`;
   
       const params = new URLSearchParams({
         serviceKey: apiKey,
