@@ -4,4 +4,5 @@ export const queryKeys = {
     stage1,
     stage2 ?? "",
   ],
+  hospitalLocation: (hpid: string) => ["hospitalLocation", hpid],
 };
